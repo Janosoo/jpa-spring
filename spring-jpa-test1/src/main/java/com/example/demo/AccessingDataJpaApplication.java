@@ -96,13 +96,31 @@ public class AccessingDataJpaApplication {
   }
   
   @Bean
-  public CommandLineRunner demo2(InvoiceRepository repository) {
+  public CommandLineRunner demo3(InvoiceRawRepository repository) {
     return (args) -> {
       // save a few customers
     	
-        Customer customer1 = new Customer("Jack", "Power", new Adress("Calle falsa 123", "Springfield", "Montana", "EEUU"));
-        
-        repository.save(1900);
+        repository.save(new InvoiceRaw(1L, 1990));
+        repository.save(new InvoiceRaw(1L, 1992));
+        repository.save(new InvoiceRaw(1L, 1991));
+        repository.save(new InvoiceRaw(3L, 2990));
+
+      // fetch all customers
+      log.info("Adress found with findAll():");
+      log.info("-------------------------------");
+      for (InvoiceRaw invoice : repository.findAll()) {
+        log.info(invoice.toString());
+      }
+      log.info("");
+
+    };
+  }
+  
+  @Bean
+  public CommandLineRunner demo4(InvoiceRepository repository) {
+    return (args) -> {
+      // save a few customers
+    	
 
 
       // fetch all customers
@@ -111,20 +129,38 @@ public class AccessingDataJpaApplication {
       for (Invoice invoice : repository.findAll()) {
         log.info(invoice.toString());
       }
+      
+
+    };
+  }
+  
+  
+  @Bean
+  public CommandLineRunner demo5(CustomerRepository repository) {
+    return (args) -> {
+      // save a few customers
+
+
+      // fetch all customers
+      log.info("Customers found with findAll():");
+      log.info("-------------------------------");
+      for (Customer customer : repository.findAll()) {
+        log.info(customer.toString());
+      }
       log.info("");
 
       // fetch an individual customer by ID
-      Invoioce Invoice = repository.findById(2L);
-      log.info("Adress found with findById(2L):");
+      Customer customer = repository.findById(1L);
+      log.info("Customer found with findById(1L):");
       log.info("--------------------------------");
-      log.info(adress.toString());
+      log.info(customer.toString());
       log.info("");
 
       // fetch customers by last name
-      log.info("Adress found with findByProvince('Montana'):");
+      log.info("Customer found with findByLastName('Bauer'):");
       log.info("--------------------------------------------");
-      repository.findByProvince("Montana").forEach(Montana -> {
-        log.info(Montana.toString());
+      repository.findByLastName("Bauer").forEach(bauer -> {
+        log.info(bauer.toString());
       });
       // for (Customer bauer : repository.findByLastName("Bauer")) {
       //  log.info(bauer.toString());

@@ -5,12 +5,14 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Customer {
@@ -25,7 +27,8 @@ public class Customer {
   @JoinColumn(name = "address_id", referencedColumnName = "id")
   private Adress adress;
   
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer", fetch = FetchType.EAGER)
+  //@Transient
   private Set<Invoice> invoices;
   
 
@@ -37,16 +40,20 @@ public class Customer {
 	this.lastName = lastName;
 	this.adress = adress;
 	this.adress.setCustomer(this);
-	invoices = new HashSet<>();
+	this.invoices = new HashSet<>();
 }
   
 
 
 
+
+
 @Override
 public String toString() {
-	return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", adress=" + adress + "]";
+	return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", adress=" + adress
+			+ ", invoices=" + invoices + "]";
 }
+
 
 public Long getId() {
     return id;
@@ -79,5 +86,7 @@ public void setInvoices(Set<Invoice> invoices) {
 	}
 	
 }
+
+
 
 }
