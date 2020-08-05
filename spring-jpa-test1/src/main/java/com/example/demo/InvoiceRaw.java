@@ -1,34 +1,30 @@
 package com.example.demo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "INVOICE")
-public class Invoice {
+public class InvoiceRaw {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "CUSTOMER_ID", nullable = false)
-	private Customer customer;
+	@Column(name = "CUSTOMER_ID")
+	private long customer_id;
 	
 	private Integer moneyAmount;
 	
-	public Invoice() {
+	public InvoiceRaw() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Invoice(Customer customer, Integer moneyAmount) {
+	public InvoiceRaw(long customer_id, Integer moneyAmount) {
+		this.customer_id = customer_id;
 		this.moneyAmount = moneyAmount;
 	}
 
@@ -39,14 +35,16 @@ public class Invoice {
 	public void setId(long id) {
 		this.id = id;
 	}
-
-	public Customer getCustomer() {
-		return customer;
+	
+	public long getCustomer_id() {
+		return customer_id;
+	}
+	
+	public void setCustomer_id(long customer_id) {
+		this.customer_id = customer_id;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+
 
 	public Integer getMoneyAmount() {
 		return moneyAmount;
@@ -58,8 +56,14 @@ public class Invoice {
 
 	@Override
 	public String toString() {
-		return "Invoices [id=" + id + ", customer=" + customer.getFirstName() + ", moneyAmount=" + moneyAmount + "]";
+		return "InvoiceRaw [id=" + id + ", customer_id=" + customer_id + ", moneyAmount=" + moneyAmount + "]";
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

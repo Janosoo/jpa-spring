@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Adress {
 	
@@ -21,6 +23,7 @@ public class Adress {
 	
 	private String country;
 	
+	@JsonBackReference
 	@OneToOne(mappedBy = "adress")
 	private Customer customer;
 	

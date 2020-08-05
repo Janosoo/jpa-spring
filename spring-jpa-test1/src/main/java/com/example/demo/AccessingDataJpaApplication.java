@@ -8,7 +8,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
+import servicios.CustomerService;
+import servicios.InvoiceCustomedService;
+
+@ComponentScan({"controllers"})
+@ComponentScan({"servicios"})
 @SpringBootApplication
 public class AccessingDataJpaApplication {
 
@@ -151,6 +157,7 @@ public class AccessingDataJpaApplication {
 
       // fetch an individual customer by ID
       Customer customer = repository.findById(1L);
+      
       log.info("Customer found with findById(1L):");
       log.info("--------------------------------");
       log.info(customer.toString());
@@ -166,6 +173,56 @@ public class AccessingDataJpaApplication {
       //  log.info(bauer.toString());
       // }
       log.info("");
+      
+      
+    };
+  }
+  
+  
+
+  
+  @Bean
+  public CommandLineRunner demo6(CustomerService service) {
+    return (args) -> {
+      // save a few customers
+
+
+      // fetch all customers
+      log.info("Customers found with findAll():");
+      log.info("-------------------------------");
+      
+      Integer cuenta = service.invoicesAmount(1L);
+      
+      log.info("La cuenta total es " + cuenta);
+      log.info("");
+
+
+      
+      
+    };
+  }
+  
+  @Bean
+  public CommandLineRunner demo7(InvoiceCustomedService service, InvoiceCustomedRepository repository) {
+    return (args) -> {
+      // save a few customers
+    	
+    	service.updateInvoiceCustomed();
+      // fetch all customers
+      log.info("Customers found with findAll():");
+      log.info("-------------------------------");
+      
+      
+      
+      for (InvoiceCustomed invoiceCustomed : repository.findAll()) {
+          log.info(invoiceCustomed.toString());}
+      
+      
+      log.info("");
+
+
+      
+      
     };
   }
 

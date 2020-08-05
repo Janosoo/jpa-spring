@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Customer {
 
@@ -23,11 +25,13 @@ public class Customer {
   private String firstName;
   private String lastName;
   
+  @JsonManagedReference
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "address_id", referencedColumnName = "id")
   private Adress adress;
   
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer", fetch = FetchType.EAGER)
+  @JsonManagedReference
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer", fetch = FetchType.LAZY)
   //@Transient
   private Set<Invoice> invoices;
   
@@ -50,8 +54,7 @@ public class Customer {
 
 @Override
 public String toString() {
-	return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", adress=" + adress
-			+ ", invoices=" + invoices + "]";
+	return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", adress=" + adress + "]";
 }
 
 
