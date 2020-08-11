@@ -27,14 +27,11 @@ public class InvoiceCustomedService {
 	@Transactional
 	public void updateInvoiceCustomed() {
 		
-		
-		
-
 		for (Customer customer: customerRepository.findAll()) {
 			
 			Adress adress = customer.getAdress();
 			
-			Set<Invoice> invoices = customer.getInvoice();
+			Set<Invoice> invoices = customer.getInvoices();
 			
 			for(Invoice invoice: invoices) {
 				

@@ -1,7 +1,15 @@
 package com.example.demo;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
 
-public interface InvoiceRawRepository extends CrudRepository<InvoiceRaw, Long> {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface InvoiceRawRepository extends JpaRepository<InvoiceRaw, Long> {
+	
+	InvoiceRaw findById(long id);
+	
+	List<InvoiceRaw> findByMoneyAmountLessThan(Integer moneyAmount);
+	
+	
 
 }

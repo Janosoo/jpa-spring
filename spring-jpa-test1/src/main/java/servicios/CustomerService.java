@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.AccessingDataJpaApplication;
+import com.example.demo.Adress;
 import com.example.demo.Customer;
 import com.example.demo.CustomerRepository;
 import com.example.demo.Invoice;
@@ -27,6 +28,7 @@ public class CustomerService implements ICustumerService {
 	@Transactional
 	public Integer invoicesAmount(long id){
 		
+		
 		log.info("Customer de servicio");
 		
 		Customer customer = repository.findById(id);
@@ -34,12 +36,15 @@ public class CustomerService implements ICustumerService {
 		log.info(customer.toString());
 		
 		
-		Set<Invoice> invoices = customer.getInvoice();
+		Set<Invoice> invoices = customer.getInvoices();
+		
+
 		
 		
 		Integer amount = 0; 
 		
 		for(Invoice invoice : invoices){
+			log.info(invoice.toString());
 			amount += invoice.getMoneyAmount();
 			   System.out.println(amount);
 			}
@@ -49,6 +54,9 @@ public class CustomerService implements ICustumerService {
 		
 		
 	}
+	
+	
+
 	
 	
 	

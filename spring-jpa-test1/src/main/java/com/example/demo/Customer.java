@@ -26,7 +26,7 @@ public class Customer {
   private String lastName;
   
   @JsonManagedReference
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JoinColumn(name = "address_id", referencedColumnName = "id")
   private Adress adress;
   
@@ -37,6 +37,13 @@ public class Customer {
   
 
   protected Customer() {}
+  
+  
+  public Customer(String firstName, String lastName) {
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.invoices = new HashSet<>();
+}
 
  
   public Customer(String firstName, String lastName, Adress adress) {
@@ -52,9 +59,13 @@ public class Customer {
 
 
 
+
+
+
 @Override
 public String toString() {
-	return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", adress=" + adress + "]";
+	return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", adress=" + adress
+			+ ", invoices=" + invoices + "]";
 }
 
 
@@ -76,9 +87,10 @@ public Adress getAdress() {
 
 public void setAdress(Adress adress) {
 	this.adress = adress;
+	adress.setCustomer(this);
 }
 
-public Set<Invoice> getInvoice() {
+public Set<Invoice> getInvoices() {
 	return invoices;
 }
 
