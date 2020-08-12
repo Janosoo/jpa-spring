@@ -7,14 +7,14 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.example.demo.Customer;
+import com.example.demo.Invoice;
 
-public class CustomerSpecification implements Specification<Customer> {
+public class InvoiceSpecification implements Specification<Invoice> {
 	
     private SpecSearchCriteria  criteria;
     
     @Override
-	public Predicate toPredicate(final Root<Customer> root, final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+	public Predicate toPredicate(final Root<Invoice> root, final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 		switch (criteria.getOperation()) {
 		case EQUALITY:
 			return builder.equal(root.get(criteria.getKey()), criteria.getValue());
@@ -39,12 +39,12 @@ public class CustomerSpecification implements Specification<Customer> {
 	
 
 
-	public CustomerSpecification() {
+	public InvoiceSpecification() {
 	}
 
 
 	
-	public CustomerSpecification(final SpecSearchCriteria criteria) {
+	public InvoiceSpecification(final SpecSearchCriteria criteria) {
 		super();
 		this.criteria = criteria;
 	}

@@ -21,7 +21,11 @@ import com.example.demo.InvoiceRaw;
 import com.example.demo.InvoiceRawRepository;
 import com.example.demo.InvoiceRepository;
 import specifications.CustomerSpecification;
+import specifications.CustomerSpecificationBuilder;
+import specifications.InvoiceSpecificationBuilder;
 import specifications.SearchCriteria;
+import specifications.SearchOperation;
+import specifications.SpecSearchCriteria;
 
 @Service
 public class InitialRunService {
@@ -214,18 +218,29 @@ public class InitialRunService {
 		    }
 		    
 		    @Transactional
-		    public void firstSpecificationTest() {
-	    	    CustomerSpecification spec = 
-	    	      new CustomerSpecification(new SearchCriteria("lastName", ":", "Bauer"));
-		    	    
-		    	    List<Customer> results = customerRepository.findAll(spec);
-		    	    log.info("LISTA DE CUSTOMER CON SPEC");
-		    	    for(Customer customer: results) {
-		    	    	log.info(customer.toString());
-		    	    }
-		    }
-		    
-		
+		    public void customerSpecificationTest() {
+		    	CustomerSpecificationBuilder builder = new CustomerSpecificationBuilder();
+		    	 
+	    	    SpecSearchCriteria spec = new SpecSearchCriteria("firstName", SearchOperation.EQUALITY, "Jack");
+	    	    SpecSearchCriteria spec1 = new SpecSearchCriteria("AND","lastName", SearchOperation.EQUALITY, "Bauer");
+	    	    List<Customer> results = customerRepository.findAll(builder.with(spec).with(spec1).build());
+	    	    log.info("LISTA DE CUSTOMER CON SPEC");
+	    	    for(Customer customer: results) {
+	    	    	log.info(customer.toString());
+	    	    }
+	    }
+		   @Transactional 
+		   public void invoiceSpecificationTest() {
+			   
+			   InvoiceSpecificationBuilder builder = new InvoiceSpecificationBuilder();
+			   
+			   SpecSearchCriteria spec = new SpecSearchCriteria("moneyAmount", SearchOperation.GREATER_THAN, 1990);
+			   List<Invoice> results = InvoiceRepository.findAll(builder.with(spec).build());
+			   
+			   
+		   }
+	    
+	
 		    
 		    
 		    

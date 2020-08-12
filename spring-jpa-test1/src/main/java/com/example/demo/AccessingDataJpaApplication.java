@@ -38,7 +38,7 @@ public class AccessingDataJpaApplication {
     	
     	initialRunService.findAllCustomers();
     	
-    	initialRunService.firstSpecificationTest();
+    	initialRunService.customerSpecificationTest();
     	
     	
     	
