@@ -1,5 +1,7 @@
 package servicios;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -18,6 +20,8 @@ import com.example.demo.InvoiceCustomedRepository;
 import com.example.demo.InvoiceRaw;
 import com.example.demo.InvoiceRawRepository;
 import com.example.demo.InvoiceRepository;
+import specifications.CustomerSpecification;
+import specifications.SearchCriteria;
 
 @Service
 public class InitialRunService {
@@ -207,6 +211,18 @@ public class InitialRunService {
 			      //  log.info(bauer.toString());
 			      // }
 			      log.info("");
+		    }
+		    
+		    @Transactional
+		    public void firstSpecificationTest() {
+	    	    CustomerSpecification spec = 
+	    	      new CustomerSpecification(new SearchCriteria("lastName", ":", "Bauer"));
+		    	    
+		    	    List<Customer> results = customerRepository.findAll(spec);
+		    	    log.info("LISTA DE CUSTOMER CON SPEC");
+		    	    for(Customer customer: results) {
+		    	    	log.info(customer.toString());
+		    	    }
 		    }
 		    
 		

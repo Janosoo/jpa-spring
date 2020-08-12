@@ -37,6 +37,11 @@ public class AccessingDataJpaApplication {
     	initialRunService.updates();
     	
     	initialRunService.findAllCustomers();
+    	
+    	initialRunService.firstSpecificationTest();
+    	
+    	
+    	
       
     };
   
