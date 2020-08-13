@@ -15,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 import servicios.CustomerService;
 import servicios.InitialRunService;
 import servicios.InvoiceCustomedService;
+import servicios.InvoiceFullService;
 
 @ComponentScan({"controllers"})
 @ComponentScan({"servicios"})
@@ -31,7 +32,7 @@ public class AccessingDataJpaApplication {
 
   @Bean
   @Transactional
-  public CommandLineRunner demo(InitialRunService initialRunService) {
+  public CommandLineRunner demo(InitialRunService initialRunService, InvoiceFullService invoiceFullService) {
     return (args) -> {
     	
     	initialRunService.updates();
@@ -39,6 +40,13 @@ public class AccessingDataJpaApplication {
     	initialRunService.findAllCustomers();
     	
     	initialRunService.customerSpecificationTest();
+    	
+    	initialRunService.invoiceSpecificationTest();
+    	
+    	invoiceFullService.updateTable();
+    	
+    	initialRunService.invoiceFullSpecificationTest();
+    	
     	
     	
     	

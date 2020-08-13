@@ -17,11 +17,14 @@ import com.example.demo.CustomerRepository;
 import com.example.demo.Invoice;
 import com.example.demo.InvoiceCustomed;
 import com.example.demo.InvoiceCustomedRepository;
+import com.example.demo.InvoiceFull;
 import com.example.demo.InvoiceRaw;
 import com.example.demo.InvoiceRawRepository;
 import com.example.demo.InvoiceRepository;
+import com.example.demo.InvoiceFullRepository;
 import specifications.CustomerSpecification;
 import specifications.CustomerSpecificationBuilder;
+import specifications.InvoiceFullSpecificationBuilder;
 import specifications.InvoiceSpecificationBuilder;
 import specifications.SearchCriteria;
 import specifications.SearchOperation;
@@ -50,8 +53,10 @@ public class InitialRunService {
 	private InvoiceCustomedService invoiceCustomedService;
 	
 	@Autowired
+	private InvoiceCustomedRepository invoiceCustomerRepository;
 	
-	private InvoiceCustomedRepository InvoiceCustomerRepository;
+	@Autowired
+	private InvoiceFullRepository invoiceFullRepository;
 	
 	
 	
@@ -176,7 +181,7 @@ public class InitialRunService {
 		      
 		      
 		      
-		      for (InvoiceCustomed invoiceCustomed : InvoiceCustomerRepository.findAll()) {
+		      for (InvoiceCustomed invoiceCustomed : invoiceCustomerRepository.findAll()) {
 		          log.info(invoiceCustomed.toString());}
 		      
 		      
@@ -234,8 +239,29 @@ public class InitialRunService {
 			   
 			   InvoiceSpecificationBuilder builder = new InvoiceSpecificationBuilder();
 			   
+			   
 			   SpecSearchCriteria spec = new SpecSearchCriteria("moneyAmount", SearchOperation.GREATER_THAN, 1990);
-			   List<Invoice> results = InvoiceRepository.findAll(builder.with(spec).build());
+			   List<Invoice> results = invoiceRepository.findAll(builder.with(spec).build());
+			   log.info("LISTA DE invoices CON SPEC");
+			   for(Invoice invoice: results) {
+				   log.info(invoice.toString());
+			   }
+			   
+			   
+		   }
+		   
+		   @Transactional 
+		   public void invoiceFullSpecificationTest() {
+			   
+			   InvoiceFullSpecificationBuilder builder = new InvoiceFullSpecificationBuilder();
+			   
+			   
+			   SpecSearchCriteria spec = new SpecSearchCriteria("moneyAmount", SearchOperation.GREATER_THAN, 1990);
+			   List<InvoiceFull> results = invoiceFullRepository.findAll(builder.with(spec).build());
+			   log.info("LISTA DE invoices full CON SPEC");
+			   for(InvoiceFull invoice: results) {
+				   log.info(invoice.toString());
+			   }
 			   
 			   
 		   }
